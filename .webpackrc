@@ -1,0 +1,13 @@
+{
+   "extraBabelPlugins": [
+    ["import", {"libraryName": "antd", "style": true}]
+  ],
+   "theme": {
+     "@primary-color": "#007FFF",
+     "@link-color": "#1DA57A",
+     "@border-radius-base": "5px",
+     "@font-size-base": "12px",
+     "@line-height-base": "1.2"
+   }
+
+}
