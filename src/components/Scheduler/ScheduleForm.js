@@ -2,26 +2,57 @@
  * Created by liuzhaozhao on 2017/12/29.
  */
 import React from 'react';
-import {Form, Input, Select, Radio, Button} from 'antd'
+import {Form, Input, Select, Radio, Button, Icon} from 'antd'
 import styles from './index.less'
 
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
-
+let uuid = 1;
 class ScheduleForm extends React.Component {
 
   onSubmit=(e)=>{
     e.preventDefault();
+    const {onSubmit} = this.props
     this.props.form.validateFields((err, values) => {
       if (!err) {
-
+        console.warn(values)
+        onSubmit(values)
       }
     });
   }
 
+
+  remove = (k) => {
+    const { form } = this.props;
+    // can use data-binding to get
+    const keys = form.getFieldValue('keys');
+    // We need at least one passenger
+    if (keys.length === 1) {
+      return;
+    }
+
+    // can use data-binding to set
+    form.setFieldsValue({
+      keys: keys.filter(key => key !== k),
+    });
+  }
+
+  add = () => {
+    const { form } = this.props;
+    // can use data-binding to get
+    const keys = form.getFieldValue('keys');
+    const nextKeys = keys.concat(uuid);
+    uuid++;
+    // can use data-binding to set
+    // important! notify form to detect changes
+    form.setFieldsValue({
+      keys: nextKeys,
+    });
+  }
+
   render(){
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -62,6 +93,38 @@ class ScheduleForm extends React.Component {
         },
       },
     };
+
+    getFieldDecorator('keys', { initialValue: [] });
+    const keys = getFieldValue('keys');
+    const formItems = keys.map((k, index) => {
+      return (
+        <FormItem
+          {...(index === 0 ? formItemLayout : tailFormItemLayout)}
+          label={index === 0 ? 'IP列表' : ''}
+          required={false}
+          key={k}
+        >
+          {getFieldDecorator(`ipList[${k}]`, {
+            validateTrigger: ['onChange', 'onBlur'],
+            rules: [{
+              required: true,
+              whitespace: true,
+              message: "请添加IP地址。",
+            }],
+          })(
+            <Input  style={{ width: '200px', marginRight: 8 }} />
+          )}
+          {keys.length > 1 ? (
+            <Icon
+              className={styles['dynamic-delete-button']}
+              type="minus-circle-o"
+              disabled={keys.length === 1}
+              onClick={() => this.remove(k)}
+            />
+          ) : null}
+        </FormItem>
+      );
+    });
     return(
       <Form onSubmit={this.onSubmit}>
         <FormItem key='name'
@@ -131,12 +194,30 @@ class ScheduleForm extends React.Component {
           {getFieldDecorator('registerType', {
             initialValue:'0'
           })(
-            <RadioGroup>
+            <RadioGroup onChange={(e)=>{
+              if(e.target.value!=='1'){
+                this.props.form.setFieldsValue({
+                  keys: [],
+                });
+              }else{
+                this.props.form.setFieldsValue({
+                  keys: [0],
+                });
+              }
+            }}>
               <Radio value='0'>自动发现</Radio>
               <Radio value='1'>指定IP</Radio>
             </RadioGroup>
           )}
         </FormItem>
+        {getFieldValue('registerType')==='1'?formItems:null}
+        {getFieldValue('registerType')==='1'?
+          <FormItem  key='plus' {...tailFormItemLayout}>
+            <Button type="dashed" onClick={this.add} style={{ width: '200px' }}>
+              <Icon type="plus" /> 添加IP地址
+            </Button>
+          </FormItem>
+          :null}
         <FormItem  key='handle'   {...tailFormItemLayout} >
           <Button htmlType="submit" type="primary" size="large" >确认</Button>
           <Button htmlType="button" type="dash" size="large"  style={{ marginLeft: 8 }} onClick={()=>{}}>返回</Button>

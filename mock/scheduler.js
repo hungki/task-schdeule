@@ -28,6 +28,9 @@ export default {
     const info = list.slice((pageNum - 1) * pageSize, pageNum * pageSize);
     res.json({code: '000000', msg: "success", total: list.length, pageNum, pageSize, info})
   },
+  'POST /wedtbs/scheduler/add': (req, res)=> {
+    res.json({code: '000000', msg: "success"})
+  },
 };
 
 

@@ -17,7 +17,6 @@ export default class SchedulerHome extends React.Component {
 
   getList=(params)=>{
     request(`/wedtbs/scheduler/main`,{},{pageSize:10, pageNum:1,...params}).then(({data:{code,msg,info,...params}})=>{
-      console.warn(params)
       this.setState({
         list:info,
         ...params
@@ -88,6 +87,7 @@ export default class SchedulerHome extends React.Component {
 
           }>
             <Table dataSource={list}
+                   rowKey='name'
                    columns={columns}
                    pagination={{
                      total,

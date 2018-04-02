@@ -2,7 +2,7 @@
  * Created by liuzhaozhao on 2017/12/29.
  */
 import React from 'react';
-import {Route, Switch, Link } from 'dva/router';
+import {Route, Switch } from 'dva/router';
 import styles from './index.less'
 import ScheduleHome from "./ScheduleHome";
 import ScheduleAdd from "./ScheduleAdd";
