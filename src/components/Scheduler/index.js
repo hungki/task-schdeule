@@ -6,6 +6,7 @@ import {Route, Switch } from 'dva/router';
 import styles from './index.less'
 import ScheduleHome from "./ScheduleHome";
 import ScheduleAdd from "./ScheduleAdd";
+import ScheduleEdit from "./ScheduleEdit";
 
 
 class Scheduler extends React.Component {
@@ -16,6 +17,7 @@ class Scheduler extends React.Component {
               <Switch>
                 <Route path={`${match.url}`} exact component={ScheduleHome} />
                 <Route path={`${match.url}/add`} component={ScheduleAdd} />
+                <Route path={`${match.url}/edit`} component={ScheduleEdit} />
               </Switch>
 
             </div>

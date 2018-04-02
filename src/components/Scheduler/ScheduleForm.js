@@ -10,6 +10,20 @@ const Option = Select.Option
 const RadioGroup = Radio.Group
 let uuid = 1;
 class ScheduleForm extends React.Component {
+  state={
+    list:[]
+  }
+
+  componentWillMount(){
+    const {getFieldDecorator} = this.props.form;
+    const {ipList=[]}=this.props.value||{};
+    getFieldDecorator('keys', { initialValue: ipList.map(({},index)=>index) });
+    uuid=ipList.length===0?1:ipList.length
+
+    this.setState({
+      list:ipList
+    })
+  }
 
   onSubmit=(e)=>{
     e.preventDefault();
@@ -27,6 +41,11 @@ class ScheduleForm extends React.Component {
     const { form } = this.props;
     // can use data-binding to get
     const keys = form.getFieldValue('keys');
+    let list = [...this.state.list]
+    list[k]=undefined
+    this.setState({
+      list
+    })
     // We need at least one passenger
     if (keys.length === 1) {
       return;
@@ -94,7 +113,6 @@ class ScheduleForm extends React.Component {
       },
     };
 
-    getFieldDecorator('keys', { initialValue: [] });
     const keys = getFieldValue('keys');
     const formItems = keys.map((k, index) => {
       return (
@@ -112,7 +130,14 @@ class ScheduleForm extends React.Component {
               message: "请添加IP地址。",
             }],
           })(
-            <Input  style={{ width: '200px', marginRight: 8 }} />
+            <Input  style={{ width: '200px', marginRight: 8 }}
+                    onChange={(e)=>{
+                      let list = [...this.state.list]
+                      list[k]=e.target.value
+                      this.setState({
+                        list
+                      })
+                    }}/>
           )}
           {keys.length > 1 ? (
             <Icon
@@ -195,13 +220,25 @@ class ScheduleForm extends React.Component {
             initialValue:'0'
           })(
             <RadioGroup onChange={(e)=>{
+              const form = this.props.form
               if(e.target.value!=='1'){
                 this.props.form.setFieldsValue({
                   keys: [],
                 });
               }else{
+                const list=this.state.list
+                let key=[]
+                let iplist={}
+                for(let n in list){
+                  if(list[n]){
+                    key.push(n)
+                    iplist[`ipList[${n}]`]=list[n]
+                    form.getFieldValue(`ipList[${n}]`)
+                  }
+                }
                 this.props.form.setFieldsValue({
-                  keys: [0],
+                  keys: key.length===0?[0]:key,
+                  ...iplist
                 });
               }
             }}>
@@ -227,4 +264,18 @@ class ScheduleForm extends React.Component {
   }
 }
 
-export default Form.create()(ScheduleForm)
+export default Form.create({
+  mapPropsToFields:({value={}})=> {
+    let r={};
+    for(let key in value){
+      if(key==='ipList'){
+        const ipList=value.ipList||[]
+        for(let index in ipList){
+          r[`ipList[${index}]`]=Form.createFormField({value:ipList[index]});
+        }
+      }
+      r[key]=Form.createFormField({value:value[key]});
+    }
+    return r;
+
+  }})(ScheduleForm)

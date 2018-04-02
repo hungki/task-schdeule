@@ -5,6 +5,7 @@ import React from 'react';
 import {Link } from 'dva/router';
 import {Card, Button, Table} from 'antd'
 import request from '../../utils/request'
+import styles from './index.less'
 
 export default class SchedulerHome extends React.Component {
   state = {
@@ -63,11 +64,13 @@ export default class SchedulerHome extends React.Component {
       title: '操作',
       dataIndex: 'name',
       key: 'handle',
-      render:()=>{
+      render:(name,record)=>{
         return <div>
-          <a>修改</a>
-          <a style={{marginLeft:'10px'}}>暂停</a>
-          <a style={{marginLeft:'10px'}}>删除</a>
+          <Link to={{pathname:'/scheduler/edit',query:record}}>
+            <span className={styles.link}>修改</span>
+          </Link>
+          <span className={styles.link}>暂停</span>
+          <span className={styles.link}>删除</span>
         </div>
       }
     },]
