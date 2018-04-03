@@ -2,6 +2,7 @@
  * Created by liuzhaozhao on 2017/12/29.
  */
 import React from 'react';
+import { Link } from 'dva/router'
 import {Form, Input, Select, Radio, Button, Icon} from 'antd'
 import styles from './index.less'
 
@@ -257,7 +258,9 @@ class ScheduleForm extends React.Component {
           :null}
         <FormItem  key='handle'   {...tailFormItemLayout} >
           <Button htmlType="submit" type="primary" size="large" >确认</Button>
-          <Button htmlType="button" type="dash" size="large"  style={{ marginLeft: 8 }} onClick={()=>{}}>返回</Button>
+          <Link to='/scheduler'>
+            <Button htmlType="button" type="dash" size="large"  style={{ marginLeft: 8 }}>返回</Button>
+          </Link>
         </FormItem>
       </Form>
     );

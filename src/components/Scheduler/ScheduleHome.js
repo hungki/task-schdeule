@@ -3,13 +3,15 @@
  */
 import React from 'react';
 import {Link } from 'dva/router';
-import {Card, Button, Table} from 'antd'
+import {Card, Button, Table, Popconfirm, message} from 'antd'
 import request from '../../utils/request'
 import styles from './index.less'
 
 export default class SchedulerHome extends React.Component {
   state = {
-    list:[]
+    list:[],
+    pageSize:10,
+    pageNum:1
   }
 
   componentWillMount(){
@@ -17,7 +19,8 @@ export default class SchedulerHome extends React.Component {
   }
 
   getList=(params)=>{
-    request(`/wedtbs/scheduler/main`,{},{pageSize:10, pageNum:1,...params}).then(({data:{code,msg,info,...params}})=>{
+    const {pageSize, pageNum}=this.state
+    request(`/wedtbs/scheduler/main`,{},{pageSize, pageNum,...params}).then(({data:{code,msg,info,...params}})=>{
       this.setState({
         list:info,
         ...params
@@ -69,8 +72,54 @@ export default class SchedulerHome extends React.Component {
           <Link to={{pathname:'/scheduler/edit',query:record}}>
             <span className={styles.link}>修改</span>
           </Link>
-          <span className={styles.link}>暂停</span>
-          <span className={styles.link}>删除</span>
+          {record.status==0?
+            <Popconfirm title={<div>确认暂停调度器<span style={{color:'red'}}>{name}</span>吗？</div>}
+                        okText="确认"
+                        cancelText="取消"
+                        onConfirm={()=>{
+                          request(`/wedtbs/scheduler/pause`,{},{name,bindTaskName:record.bindTaskName}).then(({data:{code,msg}})=>{
+                            if(code==='000000'){
+                              message.success(`调度器${name}已暂停!`)
+                              this.getList();
+                            }else {
+                              message.error(msg)
+                            }
+                          })
+                        }} >
+              <span className={styles.link}>暂停</span>
+            </Popconfirm>
+            :
+            <Popconfirm title={<div>确认恢复调度器<span style={{color:'red'}}>{name}</span>吗？</div>}
+                        okText="确认"
+                        cancelText="取消"
+                        onConfirm={()=>{
+                          request(`/wedtbs/scheduler/resume`,{},{name,bindTaskName:record.bindTaskName}).then(({data:{code,msg}})=>{
+                            if(code==='000000'){
+                              message.success(`调度器${name}已恢复!`)
+                              this.getList();
+                            }else {
+                              message.error(msg)
+                            }
+                          })
+                        }} >
+              <span className={styles.link}>恢复</span>
+            </Popconfirm>
+          }
+          <Popconfirm title={<div>确认删除调度器<span style={{color:'red'}}>{name}</span>吗？</div>}
+                      okText="确认"
+                      cancelText="取消"
+                      onConfirm={()=>{
+                        request(`/wedtbs/scheduler/delete`,{},{name,bindTaskName:record.bindTaskName}).then(({data:{code,msg}})=>{
+                          if(code==='000000'){
+                            message.success(`调度器${name}已删除!`)
+                            this.getList();
+                          }else {
+                            message.error(msg)
+                          }
+                        })
+                      }} >
+            <span className={styles.link}>删除</span>
+          </Popconfirm>
         </div>
       }
     },]

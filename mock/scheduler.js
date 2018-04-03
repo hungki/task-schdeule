@@ -15,6 +15,7 @@ let all = Mock.mock({
       threadGroupOfOneServer: '4',
       threadGroupOfServerList: '5',
       'registerType|1':['0','1'],
+      'status|1':['0','1'],
       ipList: ['192.168.0.1','192.168.0.2','192.168.0.3'],
     }
   ],
@@ -33,6 +34,15 @@ export default {
     res.json({code: '000000', msg: "success"})
   },
   'POST /wedtbs/scheduler/modify': (req, res)=> {
+    res.json({code: '000000', msg: "success"})
+  },
+  'POST /wedtbs/scheduler/pause': (req, res)=> {
+    res.json({code: '000000', msg: "success"})
+  },
+  'POST /wedtbs/scheduler/resume': (req, res)=> {
+    res.json({code: '000000', msg: "success"})
+  },
+  'POST /wedtbs/scheduler/delete': (req, res)=> {
     res.json({code: '000000', msg: "success"})
   },
 };

@@ -19,15 +19,17 @@ class App extends React.Component {
     });
   };
   componentDidMount(){
-    const {dispatch} = this.props
-    dispatch({
-      type:'app/fetch',
-      payload:{
-        data:123
-      }
-    })
+
   }
   render() {
+    const {location:{pathname}} = this.props
+    let activeKey =  /^\/(scheduler)/.exec(pathname);
+    if(activeKey){
+      activeKey = activeKey[0].substr(1);
+    }
+    else {
+      activeKey = 'home';
+    }
     return (
         <Layout className={styles.layout}>
           <Sider
@@ -36,7 +38,7 @@ class App extends React.Component {
             collapsed={this.state.collapsed}
           >
             <div className={styles.logo} />
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
+            <Menu theme="dark" mode="inline" defaultSelectedKeys={[activeKey]}>
               {
                 menu.map(({key,path,name,icon})=>{
                   return(
