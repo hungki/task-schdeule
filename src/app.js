@@ -18,9 +18,7 @@ class App extends React.Component {
       collapsed: !this.state.collapsed,
     });
   };
-  componentDidMount(){
 
-  }
   render() {
     const {location:{pathname}} = this.props
     let activeKey =  /^\/(scheduler)/.exec(pathname);

@@ -19,14 +19,14 @@ export default class SchedulerHome extends React.Component {
   }
 
   getList=(params)=>{
-    const {pageSize, pageNum}=this.state
+    const {pageSize=10, pageNum=1}=this.state
     request(`/wedtbs/scheduler/main`,{},{pageSize, pageNum,...params}).then(({data:{code,msg,info,...params}})=>{
       this.setState({
         list:info,
         ...params
       })
     })
-  }
+  };
 
   render(){
     const {list=[],pageSize=10,pageNum=1,total=0}=this.state
@@ -72,7 +72,9 @@ export default class SchedulerHome extends React.Component {
           <Link to={{pathname:'/scheduler/edit',query:record}}>
             <span className={styles.link}>修改</span>
           </Link>
-          {record.status==0?
+          {
+            // eslint-disable-next-line
+            record.status==0?
             <Popconfirm title={<div>确认暂停调度器<span style={{color:'red'}}>{name}</span>吗？</div>}
                         okText="确认"
                         cancelText="取消"
