@@ -67,6 +67,7 @@ export default class SchedulerHome extends React.Component {
       title: '操作',
       dataIndex: 'name',
       key: 'handle',
+      width:150,
       render:(name,record)=>{
         return <div>
           <Link to={{pathname:'/scheduler/edit',query:record}}>

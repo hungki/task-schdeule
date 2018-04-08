@@ -11,6 +11,11 @@ const menu=[{
         path:"/scheduler",
         name:"调度器管理",
         icon:"clock-circle-o"
+    },{
+        key:'task',
+        path:"/task",
+        name:"任务管理",
+        icon:"schedule"
     },
 ]
 

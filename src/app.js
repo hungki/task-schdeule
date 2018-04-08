@@ -5,6 +5,7 @@ import { Layout, Menu, Icon } from 'antd';
 import menu from './menu';
 import Home from './components/Home';
 import Scheduler from './components/Scheduler';
+import Task from './components/Task';
 import styles from './index.less';
 const { Header, Content, Sider } = Layout;
 
@@ -21,7 +22,7 @@ class App extends React.Component {
 
   render() {
     const {location:{pathname}} = this.props
-    let activeKey =  /^\/(scheduler)/.exec(pathname);
+    let activeKey =  /^\/(scheduler|task)/.exec(pathname);
     if(activeKey){
       activeKey = activeKey[0].substr(1);
     }
@@ -63,6 +64,7 @@ class App extends React.Component {
                 <Switch>
                   <Route path="/" exact component={Home} />
                   <Route path="/scheduler" component={Scheduler} />
+                  <Route path="/task" component={Task} />
                 </Switch>
             </Content>
           </Layout>
