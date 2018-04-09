@@ -16,6 +16,11 @@ const menu=[{
         path:"/task",
         name:"任务管理",
         icon:"schedule"
+    },{
+        key:'log',
+        path:"/log",
+        name:"日志",
+        icon:"cloud-o"
     },
 ]
 

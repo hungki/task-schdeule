@@ -13,7 +13,7 @@ const TextArea = Input.TextArea
 class TaskForm extends React.Component {
 
   state={
-    options: [ '***1', '****2'],
+    options: [],
   }
 
   onSubmit=(e)=>{

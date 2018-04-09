@@ -7,7 +7,7 @@ import {Card, Button, Table, Popconfirm, Select, message} from 'antd'
 import request from '../../utils/request'
 import styles from './index.less'
 
-const Option = Select.Option
+const Option = Select.Option;
 
 export default class TaskHome extends React.Component {
   state = {
@@ -15,8 +15,9 @@ export default class TaskHome extends React.Component {
     pageSize: 10,
     pageNum: 1,
 
-    options: ['ALL', '***1', '****2'],
-    selected: 'ALL'
+    options: ['ALL'],
+    selected: 'ALL',
+
   }
 
   componentWillMount() {
@@ -44,6 +45,11 @@ export default class TaskHome extends React.Component {
       title: '任务名称',
       dataIndex: 'name',
       key: 'name',
+      render:(name,record)=>{
+        return <Link to={{pathname: `/task/detail/${name}/${record.schedulerName}`}}>
+          <span className={styles.link}>{name}</span>
+        </Link>
+      }
     }, {
       title: '调度器名称',
       dataIndex: 'schedulerName',
@@ -67,16 +73,16 @@ export default class TaskHome extends React.Component {
       key: 'registerTime',
     }, {
       title: '上次执行时间',
-      dataIndex: 'lastExcuteTime',
-      key: 'lastExcuteTime',
+      dataIndex: 'lastExecuteTime',
+      key: 'lastExecuteTime',
     }, {
       title: '下次执行时间',
-      dataIndex: 'nextExcuteTime',
-      key: 'nextExcuteTime',
+      dataIndex: 'nextExecuteTime',
+      key: 'nextExecuteTime',
     }, {
       title: '下次结束时间',
-      dataIndex: 'nextStopExcuteTime',
-      key: 'nextStopExcuteTime',
+      dataIndex: 'nextStopExecuteTime',
+      key: 'nextStopExecuteTime',
     }, {
       title: '任务状态',
       dataIndex: 'status',
@@ -115,7 +121,7 @@ export default class TaskHome extends React.Component {
           <Link to={{pathname: '/log', query: record}}>
             <span className={styles.link}>日志</span>
           </Link>
-          <Link to={{pathname: '/task/edit', query: record}}>
+          <Link to={{pathname: `/task/edit/${name}/${record.schedulerName}`}}>
             <span className={styles.link}>编辑</span>
           </Link>
           <Popconfirm title={<div>确认删除任务<span style={{color: 'red'}}>{name}</span>吗？</div>}
@@ -189,7 +195,6 @@ export default class TaskHome extends React.Component {
                    },
                  }}/>
         </Card>
-
       </div>
     );
   }

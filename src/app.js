@@ -22,7 +22,7 @@ class App extends React.Component {
 
   render() {
     const {location:{pathname}} = this.props
-    let activeKey =  /^\/(scheduler|task)/.exec(pathname);
+    let activeKey =  /^\/(scheduler|task|log)/.exec(pathname);
     if(activeKey){
       activeKey = activeKey[0].substr(1);
     }
