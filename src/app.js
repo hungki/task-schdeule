@@ -6,6 +6,7 @@ import menu from './menu';
 import Home from './components/Home';
 import Scheduler from './components/Scheduler';
 import Task from './components/Task';
+import Log from './components/Log';
 import styles from './index.less';
 const { Header, Content, Sider } = Layout;
 
@@ -21,14 +22,7 @@ class App extends React.Component {
   };
 
   render() {
-    const {location:{pathname}} = this.props
-    let activeKey =  /^\/(scheduler|task|log)/.exec(pathname);
-    if(activeKey){
-      activeKey = activeKey[0].substr(1);
-    }
-    else {
-      activeKey = 'home';
-    }
+    const {activeKey} = this.props.app
     return (
         <Layout className={styles.layout}>
           <Sider
@@ -37,7 +31,7 @@ class App extends React.Component {
             collapsed={this.state.collapsed}
           >
             <div className={styles.logo} />
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={[activeKey]}>
+            <Menu theme="dark" mode="inline" selectedKeys={[activeKey]}>
               {
                 menu.map(({key,path,name,icon})=>{
                   return(
@@ -65,6 +59,7 @@ class App extends React.Component {
                   <Route path="/" exact component={Home} />
                   <Route path="/scheduler" component={Scheduler} />
                   <Route path="/task" component={Task} />
+                  <Route path="/log" component={Log} />
                 </Switch>
             </Content>
           </Layout>

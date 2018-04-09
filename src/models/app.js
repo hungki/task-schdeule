@@ -3,10 +3,28 @@ export default {
 
   namespace: 'app',
 
-  state: {},
+  state: {
+    activeKey:'home'
+  },
 
   subscriptions: {
     setup({ dispatch, history }) {  // eslint-disable-line
+      return history.listen(({pathname, state}) => {
+        console.warn('pathname',pathname)
+        let activeKey =  /^\/(scheduler|task|log)/.exec(pathname);
+        if(activeKey){
+          activeKey = activeKey[0].substr(1);
+        }
+        else {
+          activeKey = 'home';
+        }
+        dispatch({
+          type:'save',
+          payload:{
+            activeKey
+          }
+        })
+      });
     },
   },
 

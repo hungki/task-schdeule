@@ -29,7 +29,6 @@ export default class Home extends React.Component {
     const pieData=chartImage.map(({name,count})=>{
       return {value:parseInt(count),name}
     })
-    console.warn(pieData)
     return{
       tooltip: {
         trigger: 'item',
@@ -108,7 +107,9 @@ export default class Home extends React.Component {
                 })}
               </div>
               <div className={styles.footer}>
-                查看更多...
+                <Link to='/task'>
+                  查看更多...
+                </Link>
               </div>
             </div>
           </Col>
@@ -128,7 +129,9 @@ export default class Home extends React.Component {
                 })}
               </div>
               <div className={styles.footer}>
-                查看更多...
+                <Link to='/log'>
+                  查看更多...
+                </Link>
               </div>
             </div>
           </Col>
