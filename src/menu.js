@@ -19,8 +19,13 @@ const menu=[{
     },{
         key:'log',
         path:"/log",
-        name:"日志",
+        name:"任务日志",
         icon:"cloud-o"
+    },{
+        key:'setting',
+        path:"/setting",
+        name:"配置管理",
+        icon:"setting"
     },
 ]
 

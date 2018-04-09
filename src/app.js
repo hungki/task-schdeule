@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Scheduler from './components/Scheduler';
 import Task from './components/Task';
 import Log from './components/Log';
+import Setting from './components/Setting';
 import styles from './index.less';
 const { Header, Content, Sider } = Layout;
 
@@ -30,7 +31,9 @@ class App extends React.Component {
             collapsible
             collapsed={this.state.collapsed}
           >
-            <div className={styles.logo} />
+            <div className={styles.logo}>
+              WED-Schedule
+            </div>
             <Menu theme="dark" mode="inline" selectedKeys={[activeKey]}>
               {
                 menu.map(({key,path,name,icon})=>{
@@ -60,6 +63,7 @@ class App extends React.Component {
                   <Route path="/scheduler" component={Scheduler} />
                   <Route path="/task" component={Task} />
                   <Route path="/log" component={Log} />
+                  <Route path="/setting" component={Setting} />
                 </Switch>
             </Content>
           </Layout>

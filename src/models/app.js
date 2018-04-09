@@ -11,7 +11,7 @@ export default {
     setup({ dispatch, history }) {  // eslint-disable-line
       return history.listen(({pathname, state}) => {
         console.warn('pathname',pathname)
-        let activeKey =  /^\/(scheduler|task|log)/.exec(pathname);
+        let activeKey =  /^\/(scheduler|task|log|setting)/.exec(pathname);
         if(activeKey){
           activeKey = activeKey[0].substr(1);
         }
