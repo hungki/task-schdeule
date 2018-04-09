@@ -2,7 +2,7 @@
  * Created by liuzhaozhao on 2017/12/29.
  */
 import React from 'react';
-import {Row, Col,Table, message} from 'antd'
+import {Row, Col,Table} from 'antd'
 import request from '../../utils/request'
 
 

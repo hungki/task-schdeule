@@ -18,6 +18,7 @@ class ScheduleForm extends React.Component {
   componentWillMount(){
     const {getFieldDecorator} = this.props.form;
     const {ipList=[]}=this.props.value||{};
+    // eslint-disable-next-line
     getFieldDecorator('keys', { initialValue: ipList.map(({},index)=>index) });
     uuid=ipList.length===0?1:ipList.length
 

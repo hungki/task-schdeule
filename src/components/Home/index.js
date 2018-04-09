@@ -27,6 +27,7 @@ export default class Home extends React.Component {
   getOptions=()=>{
     const {chartImage=[]} = this.state
     const pieData=chartImage.map(({name,count})=>{
+      // eslint-disable-next-line
       return {value:parseInt(count),name}
     })
     return{

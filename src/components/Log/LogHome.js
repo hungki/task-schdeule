@@ -2,8 +2,7 @@
  * Created by liuzhaozhao on 2017/12/29.
  */
 import React from 'react';
-import {Link } from 'dva/router';
-import {Card,  Table, Select, Input,Button, message} from 'antd'
+import {Card,  Table, Select, Input,Button} from 'antd'
 import request from '../../utils/request'
 import styles from './index.less'
 

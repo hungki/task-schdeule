@@ -3,12 +3,10 @@
  */
 import React from 'react';
 import { Link } from 'dva/router'
-import {Form, Input, Select, Radio, Button, Icon} from 'antd'
-import styles from './index.less'
+import {Form, Input, Button} from 'antd'
+
 
 const FormItem = Form.Item
-const Option = Select.Option
-const RadioGroup = Radio.Group
 
 class SettingForm extends React.Component {
 
